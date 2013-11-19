@@ -79,20 +79,19 @@ class SessionManager(object):
         return sessions['active']
 
     @classmethod
-    def get_sessions(cls, user):
+    def _get_sessions(cls, user):
         if user not in cls._sessions:
             raise NoSessionAvailable
 
-        return cls._sessions[user]['sessions']
+        return cls._sessions[user]
+
+    @classmethod
+    def get_sessions(cls, user):
+        return cls._get_sessions(user)['sessions']
 
     @classmethod
     def switch_session(cls, user, session_id):
-        if user not in cls._sessions:
-            raise NoSessionAvailable
-
-        sessions = cls._sessions[user]
-        if sessions['active'] is None:
-            raise NoSessionAvailable
+        sessions = cls._get_sessions(user)
 
         try:
             session_id = int(session_id)

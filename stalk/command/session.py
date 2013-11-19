@@ -28,7 +28,7 @@ def init_session(from_id, args):
         raise InvalidCommandSyntax
 
     session = SessionManager.switch_session(from_id, session_id=args)
-    return run_command('\n', session['channel'])
+    return run_command('', session['channel'])
 
 
 @session_command('sl', 'list sessions')
