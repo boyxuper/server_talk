@@ -5,10 +5,11 @@ jabber:
   passwd: your.password
   server: [talk.google.com, 5222]
 
-admin_email: admin.servers@gmail.com
-
 server:
   host: 'xx.xx.xx.xx'
   port: 22
   user: root
   private_key: '~/.ssh/id_rsa'
+
+admin_email: admin.servers@gmail.com
+command_lead: '?'

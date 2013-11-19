@@ -16,8 +16,14 @@ def init_session(from_id, args):
     return run_command(None, session['channel'])
 
 
-@command('ss', 'switch session')
+@command('sw', 'switch session')
 def init_session(from_id, args):
+    """switch activated session,
+    use %cl.sl for session list.
+
+    syntax:
+        %cl.sw <session_id>
+    """
     if not args.isdigit():
         raise InvalidCommandSyntax
 

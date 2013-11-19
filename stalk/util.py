@@ -75,3 +75,31 @@ def run_command(command, channel, wait_prompt=True):
 def print_channel(channel):
     old = repr(channel)[18:-2].split(' ', 1)[1]
     return '<%s>' % old.replace('-> <paramiko.Transport at ', '')
+
+
+command_lead = CONFIG['command_lead']
+
+
+def render_command_lead(template, arg=None):
+    template = template.replace('%cl.', command_lead)
+    return template % arg if arg else template
+
+
+space_lead_re = re.compile(r'^(\s+)')
+
+
+def strip_doc_string(text, sep='\n'):
+    if not text:
+        return text
+
+    lines = text.splitlines()
+    for line in lines:
+        match = space_lead_re.match(line)
+        if match:
+            leading_space = match.group()
+            break
+    else:
+        return text
+
+    remove_lead = lambda s: s[len(leading_space):] if s.startswith(leading_space) else s
+    return sep.join(remove_lead(line) for line in lines)

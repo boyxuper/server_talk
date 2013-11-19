@@ -10,6 +10,7 @@ from stalk.head_quarters import HeadQuarters, CommandNotImplemented
 from stalk.session import SessionManager
 
 admin_email = CONFIG['admin_email']
+command_lead = CONFIG['command_lead']
 
 
 def process_message(_, message_node):
@@ -21,11 +22,11 @@ def process_message(_, message_node):
 
     print '%s: %s' % (from_id, content)
     if from_id == admin_email:
-        if content.startswith('?'):
+        if content.startswith(command_lead):
             try:
                 client.send(from_id, HeadQuarters.handle(from_id, content))
-            except CommandNotImplemented:
-                client.send(from_id, 'command not found.')
+            except CommandNotImplemented as err:
+                client.send(from_id, 'command not found: %s%s.' % (command_lead, err.name))
         else:
             admin_channel = SessionManager.get_session(from_id)['channel']
             client.send(from_id, run_command(content, admin_channel))
