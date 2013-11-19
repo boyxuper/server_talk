@@ -52,7 +52,9 @@ class HeadQuarters(object):
         try:
             return command['handler'](from_id, args)
         except InvalidCommandSyntax:
-            return 'invalid syntax: %s' % cls.describe_command(command)
+            return 'Invalid Syntax: "%s"\r\n%s' % (
+                cmd, cls.describe_command(command)
+            )
 
     @classmethod
     def get_command(cls, name):
