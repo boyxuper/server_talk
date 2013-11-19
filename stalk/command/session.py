@@ -7,7 +7,7 @@ __date__ = '11/18/13 4:19 PM'
 
 from ..head_quarters import command, InvalidCommandSyntax
 from ..session import SessionManager, session_command
-from ..util import run_command, print_channel
+from ..util import run_command, describe_channel
 
 
 @command('init', 'init a new session')
@@ -37,5 +37,5 @@ def list_sessions(from_id, channel, args):
     active_id = SessionManager.get_session(from_id)['id']
     return '\r\n'.join(
         '[%s] -> %s%s' % (
-            s['id'], '[*active]' * (s['id'] == active_id), print_channel(s['channel'])
+            s['id'], '[*active]' * (s['id'] == active_id), describe_channel(s['channel'])
         ) for s in sessions.values())

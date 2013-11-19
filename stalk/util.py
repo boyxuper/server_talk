@@ -76,9 +76,30 @@ def run_command(command, channel, wait_prompt=True):
     return result.strip()
 
 
-def print_channel(channel):
-    old = repr(channel)[18:-2].split(' ', 1)[1]
-    return '<%s>' % old.replace('-> <paramiko.Transport at ', '')
+def describe_channel(channel):
+    def _describe(channel):
+        result = ''
+        if channel.closed:
+            result += 'closed'
+        elif channel.active:
+            result += 'open'
+            if channel.eof_received:
+                result += ' <EOF received>'
+            if channel.eof_sent:
+                result += ' <EOF sent>'
+            # if len(channel.in_buffer) > 0:
+            #     result += ' in-buffer=%d' % (len(channel.in_buffer),)
+        return result
+    return '[%s -> %s]' % (_describe(channel), describe_transport(channel.transport))
+
+
+def describe_transport(transport):
+    if not transport.active:
+        return 'inactivated'
+    elif transport.is_authenticated():
+        return 'authenticated'
+    else:
+        return 'awaiting authentication'
 
 
 command_lead = CONFIG['command_lead']

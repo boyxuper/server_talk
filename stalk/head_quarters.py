@@ -18,7 +18,7 @@ def command(name, summary, priority=None):
 
 class CommandNotImplemented(Exception):
     def __init__(self, name, *args, **kwargs):
-        super(self, CommandNotImplemented).__init__(*args, **kwargs)
+        super(CommandNotImplemented, self).__init__(*args, **kwargs)
         self.name = name
 
 
