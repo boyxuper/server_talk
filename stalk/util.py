@@ -4,14 +4,18 @@
 __author__ = 'johnx'
 __date__ = '11/18/13 1:12 PM'
 
-import yaml
-from pprint import pprint
-from functools import partial
+import os
 import re
+import yaml
 import socket
 
 
 CONFIG = {}
+ROOT_PATH = os.path.join(os.path.dirname(__file__), '..')
+
+
+def make_path(*args):
+    return os.path.join(ROOT_PATH, *args)
 
 
 def dump_dict(d, keys):
@@ -26,7 +30,7 @@ def print_node(node, indent=1):
 
 def _read_config():
     global CONFIG
-    CONFIG = yaml.load(open('../config.yaml').read())
+    CONFIG = yaml.load(open(make_path('config.yaml'), 'rb').read())
 
 _read_config()
 

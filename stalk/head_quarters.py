@@ -5,7 +5,7 @@ __author__ = 'johnx'
 __date__ = '11/18/13 3:06 PM'
 
 import os
-from .util import render_command_lead, strip_doc_string
+from .util import render_command_lead, strip_doc_string, make_path
 
 
 def command(name, summary, priority=None):
@@ -68,7 +68,7 @@ class HeadQuarters(object):
 
     @staticmethod
     def describe_command(command, short=False):
-        short = short and command['description']
+        short = short or not command['description']
 
         template = \
             '%cl.%(name)s -> %(summary)s' if short else \
@@ -78,7 +78,7 @@ class HeadQuarters(object):
 
     @classmethod
     def load_all_commands(cls):
-        root_path = os.path.join(os.path.dirname(__file__), 'command')
+        root_path = make_path('stalk', 'command')
         cmd_file = lambda name: \
             name.endswith('.py') \
             and not name.startswith('__') \
