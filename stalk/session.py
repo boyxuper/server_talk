@@ -7,8 +7,9 @@ __date__ = '11/18/13 2:07 PM'
 import os
 import paramiko
 import functools
-from .head_quarters import command
+
 from .util import CONFIG
+from .head_quarters import command
 
 
 def session_command(*args, **kwargs):

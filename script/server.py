@@ -5,9 +5,9 @@ __author__ = 'johnx'
 __date__ = '11/18/13 1:11 PM'
 
 
+from stalk.session import SessionManager
 from stalk.util import make_client, run_command, CONFIG
 from stalk.head_quarters import HeadQuarters, CommandNotImplemented
-from stalk.session import SessionManager
 
 admin_email = CONFIG['admin_email']
 command_lead = CONFIG['command_lead']

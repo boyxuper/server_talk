@@ -5,9 +5,9 @@ __author__ = 'johnx'
 __date__ = '11/18/13 4:19 PM'
 
 
-from ..head_quarters import command, InvalidCommandSyntax
-from ..session import SessionManager, session_command
 from ..util import run_command, describe_channel
+from ..session import SessionManager, session_command
+from ..head_quarters import command, InvalidCommandSyntax
 
 
 @command('init', 'init a new session')

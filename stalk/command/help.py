@@ -6,6 +6,7 @@ __date__ = '11/18/13 3:13 PM'
 
 from ..head_quarters import command, HeadQuarters, InvalidCommandSyntax
 
+
 @command('', 'help')
 def help_menu(from_id, args):
     commands = sorted(HeadQuarters.list_commands(), key=lambda cmd: cmd['priority'])

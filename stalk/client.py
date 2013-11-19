@@ -5,6 +5,7 @@ __author__ = 'johnx'
 __date__ = '11/18/13 1:20 PM'
 
 import xmpp
+
 from stalk.util import print_node
 
 
