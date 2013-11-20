@@ -6,13 +6,14 @@ __date__ = '11/18/13 3:06 PM'
 
 import os
 
-from .util import render_command_lead, strip_doc_string, make_path
+from .util import render_command_lead, strip_doc_string, make_path, command_lead
 
 
 def command(name, summary, priority=None):
     def decorator(func):
-        description = render_command_lead(strip_doc_string(func.__doc__) or '')
-        HeadQuarters.register(name, summary, func, description, priority)
+        HeadQuarters.register(
+            name, summary, func, strip_doc_string(func.__doc__), priority
+        )
         return func
     return decorator
 
@@ -42,11 +43,11 @@ class HeadQuarters(object):
 
     @classmethod
     def handle(cls, from_id, cmd):
-        assert cmd[0] == '?'
+        assert cmd.startswith(command_lead)
         if ' ' in cmd:
-            name, args = cmd[1:].split(' ', 1)
+            name, args = cmd[len(command_lead):].split(' ', 1)
         else:
-            name, args = cmd[1:], ''
+            name, args = cmd[len(command_lead):], ''
 
         command = cls.get_command(name)
 

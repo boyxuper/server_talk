@@ -106,8 +106,8 @@ command_lead = CONFIG['command_lead']
 
 
 def render_command_lead(template, arg=None):
-    template = template.replace('%cl.', command_lead)
-    return template % arg if arg else template
+    template = template % arg if arg else template
+    return template.replace('%cl.', command_lead)
 
 
 space_lead_re = re.compile(r'^(\s+)')
