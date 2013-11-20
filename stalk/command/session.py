@@ -17,7 +17,7 @@ def init_session(from_id, args):
 
 
 @command('sw', 'switch session')
-def init_session(from_id, args):
+def switch_session(from_id, args):
     """switch activated session,
     use %cl.sl for session list.
 

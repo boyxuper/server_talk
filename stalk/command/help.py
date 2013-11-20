@@ -14,7 +14,7 @@ def help_menu(from_id, args):
 
 
 @command('?', 'help')
-def help_menu(from_id, args):
+def detailed_help(from_id, args):
     args = args.strip()
     if ' ' in args:
         raise InvalidCommandSyntax
