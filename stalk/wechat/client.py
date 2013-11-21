@@ -120,5 +120,5 @@ class WeChatClient(object):
         except TimeoutException:
             raise OperationFailed
 
-        if CSS(self.driver, '.JS_TIPS.page_tips .inner').text != '回复成功':
+        if CSS(self.driver, '.JS_TIPS.page_tips .inner').text != u'回复成功':
             raise OperationFailed
