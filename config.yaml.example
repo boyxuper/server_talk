@@ -15,5 +15,9 @@ server:
   user: root
   private_key: '~/.ssh/id_rsa'
 
+alert_target:
+  - user1@jabber.com
+  - user2@jabber.com
+
 admin_email: admin.servers@gmail.com
 command_lead: '?'

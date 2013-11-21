@@ -8,13 +8,13 @@ talk to the linux server
 Chat Client:
 ------
 
-    1. Jabber (default to gtalk)
-    2. WeChat MP Account
+     - Jabber (default to gtalk)
+     - WeChat MP Account
 
 
 Dependencies
 -----
 
-PyYAML
-selenium (for WeChat)
-xmpppy (i like it)
+     - PyYAML
+     - selenium (for WeChat)
+     - xmpppy (i like it)

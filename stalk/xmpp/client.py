@@ -5,9 +5,6 @@ __author__ = 'johnx'
 __date__ = '11/18/13 1:20 PM'
 
 import xmpp
-import pyxmpp2.client
-
-# pyxmpp2.client.Client()
 
 from ..util import print_node
 
@@ -31,8 +28,6 @@ class XMPPClient(object):
         # self.client.RegisterHandler('presence', self.presence_callback)
         # self.client.RegisterHandler('iq', self.iqHandler)
         self.client.sendInitPresence()
-
-    # def
 
     def message_callback(self, client, message):
         """ 默认消息回调(可通过继承自定义) """
