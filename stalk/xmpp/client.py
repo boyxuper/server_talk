@@ -5,12 +5,14 @@ __author__ = 'johnx'
 __date__ = '11/18/13 1:20 PM'
 
 import xmpp
+import pyxmpp2.client
 
-from stalk.util import print_node
+# pyxmpp2.client.Client()
+
+from ..util import print_node
 
 
-class JabberClient:
-    """ Jabber Bot Base Class """
+class XMPPClient(object):
     client = None
     jid = None
 
@@ -27,11 +29,17 @@ class JabberClient:
 
         # self.client.RegisterHandler('message', self.message_callback)
         # self.client.RegisterHandler('presence', self.presence_callback)
-        # self.client.RegisterHandler('iq', iqHandler)
+        # self.client.RegisterHandler('iq', self.iqHandler)
         self.client.sendInitPresence()
+
+    # def
 
     def message_callback(self, client, message):
         """ 默认消息回调(可通过继承自定义) """
+
+    def iqHandler(self, client, message):
+        """ 默认消息回调(可通过继承自定义) """
+        print message
 
     def presence_callback(self, client, msg_node):
         """ 默认事件回调,包括下面几个(可通过继承自定义) """
@@ -47,7 +55,7 @@ class JabberClient:
             self.subscribed(who)
         elif type_ == 'unsubscribed':
             self.unsubscribed(who)
-        elif type_ == 'available' or type_ == None:
+        elif type_ in ('available', None):
             self.available(msg_node)
         elif type_ == 'unavailable':
             self.unavailable(who)
@@ -74,12 +82,14 @@ class JabberClient:
     def unavailable(self, jid):
         """ 下线 """
 
-    def send(self, jid, content):
+    def send_text(self, jid, content):
         """ 发消息给某人"""
         message = xmpp.protocol.Message(jid, content, attrs={
             'type': 'chat'
         })
         self.client.send(message)
+
+    # def
 
     def __getattr__(self, item):
         return getattr(self.client, item)

@@ -24,12 +24,12 @@ def process_message(_, message_node):
     if from_id == admin_email:
         if content.startswith(command_lead):
             try:
-                client.send(from_id, HeadQuarters.handle(from_id, content))
+                client.send_text(from_id, HeadQuarters.handle(from_id, content))
             except CommandNotImplemented as err:
-                client.send(from_id, 'command not found: %s%s.' % (command_lead, err.name))
+                client.send_text(from_id, 'command not found: %s%s.' % (command_lead, err.name))
         else:
             admin_channel = SessionManager.get_session(from_id)['channel']
-            client.send(from_id, run_command(content, admin_channel))
+            client.send_text(from_id, run_command(content, admin_channel))
 
 if __name__ == '__main__':
     HeadQuarters.load_all_commands()

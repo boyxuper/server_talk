@@ -6,6 +6,7 @@ __date__ = '11/18/13 1:12 PM'
 
 import os
 import re
+import sys
 import yaml
 import socket
 
@@ -16,6 +17,8 @@ ROOT_PATH = os.path.join(os.path.dirname(__file__), '..')
 
 def make_path(*args):
     return os.path.join(ROOT_PATH, *args)
+
+sys.path.insert(0, make_path('third_party'))
 
 
 def dump_dict(d, keys):
@@ -37,8 +40,16 @@ _read_config()
 
 def make_client():
     JABBER = CONFIG['jabber']
-    from .client import JabberClient
-    client = JabberClient(JABBER['id'], JABBER['passwd'], JABBER['server'])
+    from .xmpp.client import XMPPClient
+    client = XMPPClient(JABBER['id'], JABBER['passwd'], JABBER['server'])
+    return client
+
+
+def make_wechat_client():
+    WECHAT_CONFIG = CONFIG['wechat']
+    from .wechat.client import WeChatClient
+    client = WeChatClient()
+    client.login(WECHAT_CONFIG['id'], WECHAT_CONFIG['passwd'])
     return client
 
 

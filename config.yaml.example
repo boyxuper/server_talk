@@ -5,6 +5,10 @@ jabber:
   passwd: your.password
   server: [talk.google.com, 5222]
 
+wechat:
+  id: wechat.mp.id
+  passwd: your.password
+
 server:
   host: 'xx.xx.xx.xx'
   port: 22
