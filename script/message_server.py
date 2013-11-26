@@ -6,12 +6,13 @@ __date__ = '11/21/13 4:51 PM'
 
 
 import threading
-from bottle import get, post, run, request
+from bottle import get, post, run, request, debug
 
 from stalk.util import make_client, CONFIG
 
 
-alert_targets = CONFIG['alert_target']
+config = CONFIG['message_server']
+
 
 def process_message(_, message_node):
     from_id = message_node.getFrom().getStripped()
@@ -38,7 +39,7 @@ def send_alert_page():
 
 @post('/send_alert')
 def send_alert():
-    for target in alert_targets:
+    for target in config['recipients']:
         client.send_text(target, request.POST['message'])
 
     return 'success'
@@ -46,6 +47,7 @@ def send_alert():
 if __name__ == '__main__':
     client = make_client()
     client.RegisterHandler('message', process_message)
+    debug(config['debug'])
     threading.Thread(target=client.loop).start()
     run(host='0.0.0.0', port=80)
 

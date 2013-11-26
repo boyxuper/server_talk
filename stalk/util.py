@@ -7,8 +7,10 @@ __date__ = '11/18/13 1:12 PM'
 import os
 import re
 import sys
+import time
 import yaml
 import socket
+import functools
 
 
 CONFIG = {}
@@ -23,6 +25,22 @@ sys.path.insert(0, make_path('third_party'))
 
 def dump_dict(d, keys):
     return {key: d[key] for key in keys if key in d}
+
+
+def cached(period):
+    last_called = [0, None]
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            now_time = time.time()
+            if now_time - last_called[0] > period:
+                print 'running', func.__name__
+                last_called[1] = func(*args, **kwargs)
+                last_called[0] = now_time
+            return last_called[1]
+        return wrapper
+    return decorator
 
 
 def print_node(node, indent=1):
@@ -42,7 +60,17 @@ def make_client():
     JABBER = CONFIG['jabber']
     from .xmpp.client import XMPPClient
     client = XMPPClient(JABBER['id'], JABBER['passwd'], JABBER['server'])
+
+    def on_disconnected():
+        client.login(JABBER['id'], JABBER['passwd'], JABBER['server'])
+
+    client.UnregisterDisconnectHandler(client.DisconnectHandler)
+    client.RegisterDisconnectHandler(on_disconnected)
     return client
+
+
+def ensure_client(client):
+    client.sendPresence()
 
 
 def make_wechat_client():

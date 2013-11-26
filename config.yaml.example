@@ -9,15 +9,17 @@ wechat:
   id: wechat.mp.id
   passwd: your.password
 
-server:
+ssh:
   host: 'xx.xx.xx.xx'
   port: 22
   user: root
   private_key: '~/.ssh/id_rsa'
 
-alert_target:
-  - user1@jabber.com
-  - user2@jabber.com
+message_server:
+  debug: True
+  recipients:
+    - user1@jabber.com
+    - user2@jabber.com
 
 admin_email: admin.servers@gmail.com
 command_lead: '?'

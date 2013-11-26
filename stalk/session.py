@@ -31,7 +31,7 @@ class NoSessionAvailable(Exception):
 
 class SessionManager(object):
     _users = {}
-    _config = CONFIG['server']
+    _config = CONFIG['ssh']
 
     @classmethod
     def _make_client(cls):
