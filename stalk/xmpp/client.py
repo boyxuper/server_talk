@@ -13,8 +13,9 @@ class XMPPClient(object):
     client = None
     jid = None
 
-    def __init__(self, jid, password, server=None):
-        self.login(jid, password, server)
+    def __init__(self, jid=None, password=None, server=None):
+        if jid and password:
+            self.login(jid, password, server)
 
     def _build_client(self, jid, password, server):
         client = xmpp.Client(jid.getDomain(), debug=[])

@@ -35,7 +35,6 @@ def cached(period):
         def wrapper(*args, **kwargs):
             now_time = time.time()
             if now_time - last_called[0] > period:
-                print 'running', func.__name__
                 last_called[1] = func(*args, **kwargs)
                 last_called[0] = now_time
             return last_called[1]
@@ -59,13 +58,14 @@ _read_config()
 def make_client():
     JABBER = CONFIG['jabber']
     from .xmpp.client import XMPPClient
-    client = XMPPClient(JABBER['id'], JABBER['passwd'], JABBER['server'])
+    client = XMPPClient()
 
-    def on_disconnected():
+    def reconnect():
         client.login(JABBER['id'], JABBER['passwd'], JABBER['server'])
+        client.UnregisterDisconnectHandler(client.DisconnectHandler)
+        client.RegisterDisconnectHandler(reconnect)
 
-    client.UnregisterDisconnectHandler(client.DisconnectHandler)
-    client.RegisterDisconnectHandler(on_disconnected)
+    reconnect()
     return client
 
 
