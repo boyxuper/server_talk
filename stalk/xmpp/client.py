@@ -39,14 +39,14 @@ class XMPPClient(object):
         self.client = self._build_client(jid, password, server)
 
     def message_callback(self, client, message):
-        """ 默认消息回调(可通过继承自定义) """
+        """ default message callback """
 
     def iqHandler(self, client, message):
-        """ 默认消息回调(可通过继承自定义) """
+        """ default information query callback """
         print message
 
     def presence_callback(self, client, msg_node):
-        """ 默认事件回调,包括下面几个(可通过继承自定义) """
+        """ default presence callback """
         print_node(msg_node)
         type_ = msg_node.getType()
         who = msg_node.getFrom().getStripped()
@@ -65,29 +65,29 @@ class XMPPClient(object):
             self.unavailable(who)
 
     def subscribe(self, jid):
-        """ 加好友 """
+        """ subscribe someone """
         self.client.send(xmpp.Presence(to=jid, typ='subscribed'))
         self.client.send(xmpp.Presence(to=jid, typ='subscribe'))
 
     def unsubscribe(self, jid):
-        """ 取消好友 """
+        """ unsubscribe someone """
         self.client.send(xmpp.Presence(to=jid, typ='unsubscribe'))
         self.client.send(xmpp.Presence(to=jid, typ='unsubscribed'))
 
     def subscribed(self, jid):
-        """ 已加 """
+        """ someone subscribed me """
 
     def unsubscribed(self, jid):
-        """ 已退 """
+        """ someone unsubscribed me """
 
     def available(self, message):
-        """ 上线 """
+        """ someone goes available """
 
     def unavailable(self, jid):
-        """ 下线 """
+        """ someone goes unavailable """
 
     def send_text(self, jid, content):
-        """ 发消息给某人"""
+        """ send plain text to someone """
         message = xmpp.protocol.Message(jid, content, attrs={
             'type': 'chat'
         })
@@ -100,8 +100,5 @@ class XMPPClient(object):
 
     def loop(self):
         while True:
-            try:
-                self.ensure_client()
-                self.client.Process(1)
-            except KeyboardInterrupt:   # Ctrl+C停止
-                return
+            self.ensure_client()
+            self.client.Process(1)
