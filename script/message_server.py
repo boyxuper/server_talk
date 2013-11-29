@@ -21,7 +21,8 @@ def process_message(_, message_node):
     if not content:
         return
 
-    client.send_text(from_id, 'hey: %s' % from_id)
+    if content == 'hi':
+        client.send_text(from_id, 'hi: %s' % from_id)
 
 
 @get('/send_alert')
@@ -49,5 +50,5 @@ if __name__ == '__main__':
     client.RegisterHandler('message', process_message)
     debug(config['debug'])
     threading.Thread(target=client.loop).start()
-    run(host='0.0.0.0', port=80)
+    run(host=config['bind'], port=config['port'])
 

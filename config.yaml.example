@@ -16,6 +16,8 @@ ssh:
   private_key: '~/.ssh/id_rsa'
 
 message_server:
+  bind: 127.0.0.1
+  port: 1080
   debug: True
   recipients:
     - user1@jabber.com
