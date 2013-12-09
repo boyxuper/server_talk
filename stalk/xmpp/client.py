@@ -4,7 +4,9 @@
 __author__ = 'johnx'
 __date__ = '11/18/13 1:20 PM'
 
+import time
 import xmpp
+import traceback
 
 from ..util import print_node, ensure_client, cached
 
@@ -100,5 +102,10 @@ class XMPPClient(object):
 
     def loop(self):
         while True:
-            self.ensure_client()
-            self.client.Process(1)
+            try:
+                self.ensure_client()
+                self.client.Process(1)
+            except Exception as err:
+                traceback.print_exc()
+                time.sleep(1)
+                continue
