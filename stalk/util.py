@@ -42,6 +42,22 @@ def cached(period):
     return decorator
 
 
+def retry(times=3, delay=5):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            i = 0
+            while times is None or i < times:
+                try:
+                    time.sleep(delay)
+                    return func(*args, **kwargs)
+                except:
+                    i += 1
+                    continue
+        return wrapper
+    return decorator
+
+
 def print_node(node, indent=1):
     print node
     # pprint(dump_dict(node.__dict__, ['name', 'props', 'attrs']), indent=indent)
@@ -60,6 +76,7 @@ def make_client():
     from .xmpp.client import XMPPClient
     client = XMPPClient()
 
+    @retry(times=None, delay=10)
     def reconnect():
         client.login(JABBER['id'], JABBER['passwd'], JABBER['server'])
         client.UnregisterDisconnectHandler(client.DisconnectHandler)
